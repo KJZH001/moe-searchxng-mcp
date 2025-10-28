@@ -1,6 +1,7 @@
 # 原始代码来自于 https://www.cnblogs.com/xiao987334176/p/18830888
 from fastmcp import FastMCP
 import requests
+import os
 
 mcp = FastMCP("searxng", port=9000)
 
@@ -9,8 +10,14 @@ def search(query: str) -> str:
     """
     搜索关键字
     """
-    # API URL
-    url = "http://10.44.32.14:8081/search?q=%s&format=json"%query
+    # 从环境变量读取 SearXNG 端点，如果不存在则使用回退值 http://localhost:8080
+    moe_searxng_endpoint = os.getenv(
+        'MOE-SEARXNG-ENDPOINT', 
+        'http://localhost:8080'
+    )
+
+    # 构建完整的搜索 URL
+    url = f"{moe_searxng_endpoint}/search?q={query}&format=json"
 
     try:
         # 发送GET请求
