@@ -9,18 +9,18 @@ sys.stdout.flush()
 
 print("主程序已经启动", flush=True)
 mcp = FastMCP("searxng", stateless_http=True, host="0.0.0.0", port=9000)
+# 从环境变量读取 SearXNG 端点，如果不存在则使用回退值 http://localhost:8080
+moe_searxng_endpoint = os.getenv(
+    'MOE_SEARXNG_ENDPOINT', 
+    'http://localhost:8080'
+)
+print(f"当前终结点为：{moe_searxng_endpoint}", flush=True)
 
 @mcp.tool()
 def search(query: str) -> str:
     """
     搜索关键字
     """
-    # 从环境变量读取 SearXNG 端点，如果不存在则使用回退值 http://localhost:8080
-    moe_searxng_endpoint = os.getenv(
-        'MOE-SEARXNG-ENDPOINT', 
-        'http://localhost:8080'
-    )
-
     # 构建完整的搜索 URL
     url = f"{moe_searxng_endpoint}/search?q={query}&format=json"
     print(f"当前请求的完整url为：{url}", flush=True)

@@ -11,3 +11,9 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - MOE_SEARXNG_ENDPOINT=${MOE_SEARXNG_ENDPOINT}
+    networks:
+      - searxng
+  
+networks:
+  searxng:
+    external: true
