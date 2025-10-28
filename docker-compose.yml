@@ -9,5 +9,5 @@ services:
     ports:
       - "35081:9000"
     environment:
-      - FLASK_ENV=development
       - PYTHONUNBUFFERED=1
+      - MOE-SEARXNG-ENDPOINT=${MOE-SEARXNG-ENDPOINT:-http://localhost}
