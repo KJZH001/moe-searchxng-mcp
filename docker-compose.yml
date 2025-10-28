@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    ports:
+      - "35080:5000"
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
