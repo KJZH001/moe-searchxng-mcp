@@ -11,12 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 将代码文件夹挂载到容器中
 COPY . /app
 
-# 设置 Flask 的环境变量
-ENV FLASK_APP=main.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# 暴露 Flask 默认端口
-EXPOSE 5000
+# 暴露默认端口
+EXPOSE 9000
 
 # 启动 Flask 服务
 #CMD ["flask", "run"]
