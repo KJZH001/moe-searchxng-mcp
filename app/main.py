@@ -2,8 +2,13 @@
 from fastmcp import FastMCP
 import requests
 import os
+import sys
 
-mcp = FastMCP("searxng", host="0.0.0.0", port=9000)
+# 禁止print缓冲
+sys.stdout.flush()
+
+print("主程序已经启动", flush=True)
+mcp = FastMCP("searxng", stateless_http=True, host="0.0.0.0", port=9000)
 
 @mcp.tool()
 def search(query: str) -> str:
@@ -18,6 +23,7 @@ def search(query: str) -> str:
 
     # 构建完整的搜索 URL
     url = f"{moe_searxng_endpoint}/search?q={query}&format=json"
+    print(f"当前请求的完整url为：{url}", flush=True)
 
     try:
         # 发送GET请求
@@ -27,21 +33,21 @@ def search(query: str) -> str:
         if response.status_code == 200:
             # 将响应内容解析为JSON
             data = response.json()
-            # print("JSON内容:")
-            # print(data,type(data))
+            print("JSON内容:")
+            print(data,type(data))
             result_list=[]
             for i in data["results"]:
-                # print(i["content"])
+                print(i["content"])
                 result_list.append(i["content"])
             content="\n".join(result_list)
-            # print(content)
+            print(content)
             return content
         else:
-            print(f"请求失败，状态码: {response.status_code}")
+            print(f"请求失败，状态码: {response.status_code}", flush=True)
             return False
 
     except requests.exceptions.RequestException as e:
-        print(f"请求过程中发生错误: {e}")
+        print(f"请求过程中发生错误: {e}", flush=True)
         return False
 
 if __name__ == "__main__":
