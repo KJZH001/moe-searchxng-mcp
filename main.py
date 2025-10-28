@@ -3,7 +3,7 @@ from fastmcp import FastMCP
 import requests
 import os
 
-mcp = FastMCP("searxng", port=39000)
+mcp = FastMCP("searxng", port=9000)
 
 @mcp.tool()
 def search(query: str) -> str:
